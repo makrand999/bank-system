@@ -7,7 +7,7 @@
 #include <math.h>
 
 // struct of username and pin(modify)
-// cibil score
+
 time_t t;
 int x[20], y[20];
 char a, ch, cpin[22], cpin1[22], username[] = "max", tusername[22];
