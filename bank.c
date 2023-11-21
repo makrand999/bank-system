@@ -258,10 +258,12 @@ void login() // login function
       j--;
       continue;
     }
-
+  if(ch != 8)
+  {
     tusername[j] = ch;
     printf("%c", ch);
     j++;
+  }
   }
   tusername[j] = '\0';
   u = strcmp(username, tusername);
