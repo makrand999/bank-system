@@ -249,7 +249,6 @@ void login() // login function
     {
       printf("\b \b");
       j--;
-      
     }
     if (ch != 8 || ch == 32)
     {
@@ -430,63 +429,61 @@ int DOB()
 
   get(0);
   printf("2] date of birth:- DD/MM/YYYY\b\b\b\b\b\b\b\b\b\b");
-  
 
-  
   j = 0;
-    while (1)
+  while (1)
+  {
+    if (j == 10)
     {
-        if (j == 10)
-        {
-            if ((cpin[0] - 48) * 10 + cpin[1] - 48 < 32 && (cpin[0] - 48) * 10 + cpin[1] - 48 != 0 && (cpin[3] - 48) * 10 + cpin[4] - 48 < 13 && (cpin[3] - 48) * 10 + cpin[4] - 48 != 0 && (cpin[6] - 48) * 1000 + (cpin[7] - 48) * 100 + (cpin[8] - 48) * 10 + cpin[9] - 48 > 1910 && (cpin[6] - 48) * 1000 + (cpin[7] - 48) * 100 + (cpin[8] - 48) * 10 + cpin[9] - 48 < 2024)
+      if ((cpin[0] - 48) * 10 + cpin[1] - 48 < 32 && (cpin[0] - 48) * 10 + cpin[1] - 48 != 0 && (cpin[3] - 48) * 10 + cpin[4] - 48 < 13 && (cpin[3] - 48) * 10 + cpin[4] - 48 != 0 && (cpin[6] - 48) * 1000 + (cpin[7] - 48) * 100 + (cpin[8] - 48) * 10 + cpin[9] - 48 > 1910 && (cpin[6] - 48) * 1000 + (cpin[7] - 48) * 100 + (cpin[8] - 48) * 10 + cpin[9] - 48 < 2024)
 
-                break;
-        }
-        if (j == 6 || j == 7 || j == 8 || j == 9)
-        {
-            printf("Y\b");
-        }
-        if (j == 3 || j == 4)
-        {
-            printf("M\b");
-        }
-        if (j == 0 || j == 1)
-        {
-            printf("D\b");
-        }
-
-        if (j == 2 || j == 5)
-        {
-
-            printf("/");
-            j++;
-        }
-        cpin[j] = getch();
-
-        if (cpin[j] == 8 && j > 0)
-        {
-            if (j == 3 || j == 6)
-            {
-                printf("\b\b \b");
-                j--;
-                j--;
-            }
-            else
-            {
-                printf("\b \b");
-                j--;
-            }
-            continue;
-        }
-        if (cpin[j] > 47 && cpin[j] < 58 && j < 10)
-        {
-            printf("%c", cpin[j]);
-            j++;
-        }
+        break;
+    }
+    if (j == 6 || j == 7 || j == 8 || j == 9)
+    {
+      printf("Y\b");
+    }
+    if (j == 3 || j == 4)
+    {
+      printf("M\b");
+    }
+    if (j == 0 || j == 1)
+    {
+      printf("D\b");
     }
 
-  m[i].dob[0] = (cpin[0] - 48) * 10 + cpin[1] - 48; // day
-  m[i].dob[1] = (cpin[3] - 48) * 10 + cpin[4] - 48; // month
+    if (j == 2 || j == 5)
+    {
+
+      printf("/");
+      j++;
+    }
+    cpin[j] = getch();
+
+    if (cpin[j] == 8 && j > 0)
+    {
+      if (j == 3 || j == 6)
+      {
+        printf("\b\b \b");
+        j--;
+        j--;
+      }
+      else
+      {
+        printf("\b \b");
+        j--;
+      }
+      continue;
+    }
+    if (cpin[j] > 47 && cpin[j] < 58 && j < 10)
+    {
+      printf("%c", cpin[j]);
+      j++;
+    }
+  }
+
+  m[i].dob[0] = (cpin[0] - 48) * 10 + cpin[1] - 48;                                                // day
+  m[i].dob[1] = (cpin[3] - 48) * 10 + cpin[4] - 48;                                                // month
   m[i].dob[2] = (cpin[6] - 48) * 1000 + (cpin[7] - 48) * 100 + (cpin[8] - 48) * 10 + cpin[9] - 48; // year
 }
 int blank(u)
@@ -972,44 +969,65 @@ void loan()
   }
 
   printf("repay date:- ");
-Rdate:
   get(0);
-  printf("2] date of birth:- dd/mm/yyyy\b\b\b\b\b\b\b\b\b\b");
-  cpin[0] = 1;
-  while (cpin[0] < 48 || cpin[0] > 58)
-    cpin[0] = getch();
-  printf("%c", cpin[0]);
-  cpin[1] = 1;
-  while (cpin[1] < 48 || cpin[1] > 58)
-    cpin[1] = getch();
-  printf("%c", cpin[1]);
-  printf("/");
-  l[L].rdate[0] = (cpin[0] - 48) * 10 + cpin[1] - 48; // completed
-  cpin[0] = 1;
-  while (cpin[0] < 48 || cpin[0] > 58)
-    cpin[0] = getch();
-  printf("%c", cpin[0]);
-  cpin[1] = 1;
-  while (cpin[1] < 48 || cpin[1] > 58)
-    cpin[1] = getch();
-  printf("%c", cpin[1]);
-  printf("/");
-  l[L].rdate[1] = (cpin[0] - 48) * 10 + cpin[1] - 48;
-  for (j = 0; j < 4; j++)
-  {
-    cpin[j] = 1;
-    while (cpin[j] < 48 || cpin[j] > 58)
-      cpin[j] = getch();
-    printf("%c", cpin[j]);
-  }
-  l[L].rdate[2] = (cpin[0] - 48) * 1000 + (cpin[1] - 48) * 100 + (cpin[2] - 48) * 10 + cpin[3] - 48;
-  printf("\t\t\t\t");
+  printf("2] date :- DD/MM/YYYY\b\b\b\b\b\b\b\b\b\b");
 
-  if (l[L].rdate[0] > 31 || l[L].rdate[1] > 12 || l[L].rdate[1] == 0 || l[L].rdate[2] < 1900 || l[L].rdate[2] > 2025)
+  j = 0;
+  while (1)
   {
-    set(0);
-    goto Rdate;
+    if (j == 10)
+    {
+      if ((cpin[0] - 48) * 10 + cpin[1] - 48 < 32 && (cpin[0] - 48) * 10 + cpin[1] - 48 != 0 && (cpin[3] - 48) * 10 + cpin[4] - 48 < 13 && (cpin[3] - 48) * 10 + cpin[4] - 48 != 0 && (cpin[6] - 48) * 1000 + (cpin[7] - 48) * 100 + (cpin[8] - 48) * 10 + cpin[9] - 48 > 1910 && (cpin[6] - 48) * 1000 + (cpin[7] - 48) * 100 + (cpin[8] - 48) * 10 + cpin[9] - 48 < 2024)
+
+        break;
+    }
+    if (j == 6 || j == 7 || j == 8 || j == 9)
+    {
+      printf("Y\b");
+    }
+    if (j == 3 || j == 4)
+    {
+      printf("M\b");
+    }
+    if (j == 0 || j == 1)
+    {
+      printf("D\b");
+    }
+
+    if (j == 2 || j == 5)
+    {
+
+      printf("/");
+      j++;
+    }
+    cpin[j] = getch();
+
+    if (cpin[j] == 8 && j > 0)
+    {
+      if (j == 3 || j == 6)
+      {
+        printf("\b\b \b");
+        j--;
+        j--;
+      }
+      else
+      {
+        printf("\b \b");
+        j--;
+      }
+      continue;
+    }
+    if (cpin[j] > 47 && cpin[j] < 58 && j < 10)
+    {
+      printf("%c", cpin[j]);
+      j++;
+    }
   }
+
+  l[L].rdate[0] = (cpin[0] - 48) * 10 + cpin[1] - 48; // completed
+  l[L].rdate[1] = (cpin[3] - 48) * 10 + cpin[4] - 48;
+  l[L].rdate[2] = (cpin[6] - 48) * 1000 + (cpin[7] - 48) * 100 + (cpin[8] - 48) * 10 + cpin[9] - 48;
+
   while (1)
   {
     ch = getch();
