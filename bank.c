@@ -433,50 +433,61 @@ int DOB()
   
 
   
-  j=0;
-  while (1)
-  {
-    if(j == 10)
-   {
-     if ( (cpin[0] - 48) * 10 + cpin[1] - 48 < 32 && (cpin[0] - 48) * 10 + cpin[1] - 48 !=  0 && (cpin[2] - 48) * 10 + cpin[3] - 48 <13 && (cpin[2] - 48) * 10 + cpin[3] - 48 != 0 && (cpin[4] - 48) * 1000 + (cpin[5] - 48) * 100 + (cpin[6] - 48) * 10 + cpin[7] - 48 > 1910 && (cpin[4] - 48) * 1000 + (cpin[5] - 48) * 100 + (cpin[6] - 48) * 10 + cpin[7] - 48 < 2024)
-     break;
-   }
-    if (j == 6 || j == 7 || j == 8 || j == 9)
+  j = 0;
+    while (1)
     {
-      printf("Y\b");
+        if (j == 10)
+        {
+            if ((cpin[0] - 48) * 10 + cpin[1] - 48 < 32 && (cpin[0] - 48) * 10 + cpin[1] - 48 != 0 && (cpin[3] - 48) * 10 + cpin[4] - 48 < 13 && (cpin[3] - 48) * 10 + cpin[4] - 48 != 0 && (cpin[6] - 48) * 1000 + (cpin[7] - 48) * 100 + (cpin[8] - 48) * 10 + cpin[9] - 48 > 1910 && (cpin[6] - 48) * 1000 + (cpin[7] - 48) * 100 + (cpin[8] - 48) * 10 + cpin[9] - 48 < 2024)
+
+                break;
+        }
+        if (j == 6 || j == 7 || j == 8 || j == 9)
+        {
+            printf("Y\b");
+        }
+        if (j == 3 || j == 4)
+        {
+            printf("M\b");
+        }
+        if (j == 0 || j == 1)
+        {
+            printf("D\b");
+        }
+
+        if (j == 2 || j == 5)
+        {
+
+            printf("/");
+            j++;
+        }
+        cpin[j] = getch();
+
+        if (cpin[j] == 8 && j > 0)
+        {
+            if (j == 3 || j == 6)
+            {
+                printf("\b\b \b");
+                j--;
+                j--;
+            }
+            else
+            {
+                printf("\b \b");
+                j--;
+            }
+            continue;
+        }
+        if (cpin[j] > 47 && cpin[j] < 58 && j < 10)
+        {
+            printf("%c", cpin[j]);
+            j++;
+        }
     }
-    if (j == 3 || j == 4)
-    {
-      printf("M\b");
-    }
-  if (j == 0 || j == 1)
-  {
-    printf("D\b");
-  }
-  
-  if (j == 2 || j == 5 )
-  {
-    printf("/");
-    j++;
-    continue;
-  }
-    cpin[j] = getch();
-    
-    if (cpin[j] == 8 && j > 0)
-    {
-      printf("\b \b");
-      j--;
-    }
-    if (cpin[0] > 48 && cpin[0] < 58 && j < 10)
-    {
-      printf("%c", cpin[0]);
-     j++;
-    }
-  }
 
   m[i].dob[0] = (cpin[0] - 48) * 10 + cpin[1] - 48; // day
-  m[i].dob[1] = (cpin[2] - 48) * 10 + cpin[3] - 48; // month
-  m[i].dob[2] = (cpin[4] - 48) * 1000 + (cpin[5] - 48) * 100 + (cpin[6] - 48) * 10 + cpin[7] - 48; // year
+  m[i].dob[1] = (cpin[3] - 48) * 10 + cpin[4] - 48; // month
+  m[i].dob[2] = (cpin[6] - 48) * 1000 + (cpin[7] - 48) * 100 + (cpin[8] - 48) * 10 + cpin[9] - 48; // year
 }
 int blank(u)
 {
