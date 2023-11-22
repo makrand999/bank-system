@@ -12,7 +12,7 @@ time_t t;
 int x[20], y[20];
 char a, ch, cpin[22], cpin1[22], username[] = "max", tusername[22];
 int p, u, i = 0, j, J, in, pin, I[22] = {0}, X, L = 0, cibil_score[10] = {700}; // i is for new acc counter and I[] is for transection counter p is independent
-long long int temp_acc_number;
+int temp_acc_number;
 
 struct tran
 {
@@ -63,7 +63,7 @@ void acc();
 
 int main()
 {
-
+system("cls");
   loanc();
   login();
   home();
@@ -95,25 +95,61 @@ void home()
     break;
 
   case '2':
+  get(1);
   acc_num:
+  set(1);
     printf("account number:- ");
     get(0);
     blank(20);
     set(0);
-    scanf("%d", &temp_acc_number);
-    in = 0;
+    j=0;
+    while(1)
+    {
+      ch=getch();
+      if (ch == 13)
+      {
+        break;
+      }
+      if (ch==8 && j > 0) 
+      {
+        printf("\b \b");
+        j--;
+        continue;
+      }
+      if (ch > 47  && ch <  58 )
+      {
+        cpin[j]=ch;
+        printf("%c",ch);
+        j++;
+      }
+    }
+    cpin[j]='\0';
+    temp_acc_number = atoi(cpin);
+
+    for(j=0;j<i;j++)
+    {
+      if (temp_acc_number==m[j].acc_number)
+      {
+        in=1;
+        break;
+      }
+      else
+      {
+         in=0;
+      }
+    }
+  if (in == 0 )
+  {
+    goto acc_num;
+  }
+    
     in = temp_acc_number % 10;
+    
     if (temp_acc_number == 1)
-    {
-      system("cls");
+   {
       home();
-    }
-    if (temp_acc_number != m[in].acc_number)
-    {
-      goto acc_num;
-    }
-    if (temp_acc_number == 1)
-      home();
+   }
+ 
     system("cls");
     acc_details();
     break;
@@ -846,7 +882,7 @@ void loan()
   {
 
     ch = getch();
-    if (ch == 24)
+    if (ch == 13)
     {
       break;
     }
@@ -879,29 +915,29 @@ void loan()
   {
     in = j - 1;
     l[L].acc_number = m[in].acc_number;
-    printf("\nname:- %s\n", m[in].name);
-    printf("employment status:-\n");
-    printf("1] employed\n2] self-employed\n3] unemployed ");
+    printf("\nname:- %s\n\n", m[in].name);
+    printf("employment status:-\n\n");
+    printf("1] employed\n\n2] self-employed\n\n3] unemployed ");
     while (1)
     {
       a = getch();
-      if (a == 1)
+      if (a == 49)
       {
         strcpy(l[L].employment_status, "employed");
         break;
       }
-      else if (a == 2)
+      else if (a == 50)
       {
         strcpy(l[L].employment_status, "self-employed");
         break;
       }
-      else if (a == 3)
+      else if (a == 51)
       {
         strcpy(l[L].employment_status, "unemployed");
         break;
       }
     }
-    if (a != 3)
+    if (a != 51)
     {
       printf("\nmonthly income :- ");
       j = 0;
@@ -914,7 +950,7 @@ void loan()
           j--;
           continue;
         }
-        if (a < 58 && a > 48)
+        if (a < 58 && a > 47)
         {
           cpin1[j] = a - 48;
           printf("%C", a);
@@ -939,11 +975,10 @@ void loan()
         j--;
         continue;
       }
-      if (ch < 58 && ch > 48)
+      if (ch < 58 && ch > 47)
       {
-        cpin1[j] = ch - 48;
-        printf("%c", ch);
-
+        cpin1[j] = ch;
+        printf("%c",ch);
         j++;
       }
       if (ch == 13)
@@ -953,11 +988,11 @@ void loan()
     }
     cpin1[j] = '\0';
     l[L].l_amount = atoll(cpin1);
-    printf("\npurpose of the loan:- ");
-    scanf("[^\n]", l[L].l_purpose[55]);
+    printf("\n\npurpose of the loan:- ");
+    scanf(" [^\n]", l[L].l_purpose[55]);
 
-    printf("type of loan:- ");
-    scanf("[^\n]", l[L].l_type[22]);
+    printf("\ntype of loan:- ");
+    scanf(" [^\n]", l[L].l_type[22]);
     time(&t);
     struct tm *current_time = localtime(&t);
 
@@ -967,8 +1002,12 @@ void loan()
     loanc();
     L++;
   }
-
-  printf("repay date:- ");
+else 
+{
+  system("cls");
+  loan();
+}
+  printf("\nrepay date:- ");
   get(0);
   printf("2] date :- DD/MM/YYYY\b\b\b\b\b\b\b\b\b\b");
 
@@ -978,8 +1017,7 @@ void loan()
     if (j == 10)
     {
       if ((cpin[0] - 48) * 10 + cpin[1] - 48 < 32 && (cpin[0] - 48) * 10 + cpin[1] - 48 != 0 && (cpin[3] - 48) * 10 + cpin[4] - 48 < 13 && (cpin[3] - 48) * 10 + cpin[4] - 48 != 0 && (cpin[6] - 48) * 1000 + (cpin[7] - 48) * 100 + (cpin[8] - 48) * 10 + cpin[9] - 48 > 1910 && (cpin[6] - 48) * 1000 + (cpin[7] - 48) * 100 + (cpin[8] - 48) * 10 + cpin[9] - 48 < 2024)
-
-        break;
+      break;
     }
     if (j == 6 || j == 7 || j == 8 || j == 9)
     {
