@@ -400,6 +400,42 @@ void withdraw() // withdraw funcyion
   printf("WITHDRAW\n\n");
   printf("\n\n\namount:- ");
   scanf("%d", &h[in][I[in]].transfer);
+  while(1)
+  {
+    ch=getch();
+    if (ch == 13)
+    {
+      break;
+    }
+    if (ch == 8 )
+    {
+      printf("\b \b");
+      j--;
+    continue;
+      
+    }
+    if (ch > 47 && ch < 58)
+    {
+      cpin1[j]=ch;
+      printf("%c",ch);
+      j++;
+
+    }
+    cpin1[j]='\0';
+     h[in][I[in]].transfer=atoll(cpin1);
+     if (m[in].acc_balance < h[in][I[in]].transfer)
+     {
+      printf("insufficient balance");
+      while(1)
+      {
+        ch=getch();
+        if (ch== 27)
+        {
+          home();
+        }
+      }
+     }
+  }
   m[in].acc_balance -= h[in][I[in]].transfer;
   h[in][I[in]].balance = m[in].acc_balance;
   printf("\n\ndone\n");
@@ -699,7 +735,7 @@ int transection()
       break;
 
     ch = getch();
-    if (ch == 27 || ch == 32)
+    if (ch == 27 || ch == 65)
     {
       break;
     }
@@ -719,7 +755,7 @@ int transection()
   }
   if (ch == 27)
     home();
-  if (ch == 32)
+  if (ch == 65)
   {
     acc();
     transection();
@@ -939,7 +975,7 @@ void loan()
     }
     if (a != 51)
     {
-      printf("\nmonthly income :- ");
+      printf("\n\nmonthly income :- ");
       j = 0;
       while (1)
       {
@@ -964,7 +1000,7 @@ void loan()
       cpin1[j] = '\0';
       l[L].m_income = atoll(cpin1);
     }
-    printf("\nloan amount repuest:-");
+    printf("\n\nloan amount repuest:-");
     j = 0;
     while (1)
     {
@@ -991,8 +1027,6 @@ void loan()
     printf("\n\npurpose of the loan:- ");
     scanf(" [^\n]", l[L].l_purpose[55]);
 
-    printf("\ntype of loan:- ");
-    scanf(" [^\n]", l[L].l_type[22]);
     time(&t);
     struct tm *current_time = localtime(&t);
 
@@ -1007,9 +1041,9 @@ else
   system("cls");
   loan();
 }
-  printf("\nrepay date:- ");
+  
   get(0);
-  printf("2] date :- DD/MM/YYYY\b\b\b\b\b\b\b\b\b\b");
+  printf("repay date :- DD/MM/YYYY\b\b\b\b\b\b\b\b\b\b");
 
   j = 0;
   while (1)
@@ -1066,6 +1100,8 @@ else
   l[L].rdate[1] = (cpin[3] - 48) * 10 + cpin[4] - 48;
   l[L].rdate[2] = (cpin[6] - 48) * 1000 + (cpin[7] - 48) * 100 + (cpin[8] - 48) * 10 + cpin[9] - 48;
 
+printf("\n\nloan requested sucssesfuly  ");
+
   while (1)
   {
     ch = getch();
@@ -1103,7 +1139,7 @@ void acc()
   while (1)
   {
     ch = getch();
-    if (ch == 32)
+    if (ch == 65)
       break;
   }
   system("cls");
