@@ -250,7 +250,7 @@ void deposite() //  deposite function
   printf("\naccount balance:- %d", m[in].acc_balance);
 
   printf("\nenter amount:-");
-  scanf("%li", &h[in][I[in]].transfer);
+  scanf("%d", &h[in][I[in]].transfer);
   m[in].acc_balance += h[in][I[in]].transfer;
   h[in][I[in]].balance = m[in].acc_balance;
   printf("\ntransection successfull");
