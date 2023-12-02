@@ -1,18 +1,17 @@
 #include <stdio.h>
 #include <conio.h>
 #include <stdlib.h>
-#include <windows.h>
 #include <time.h>
 #include <string.h>
 #include <math.h>
+#include <windows.h>
 
-
-
-time_t t;
+time_t t;   //ttt
 int x[20], y[20];
-char a, ch, cpin[22], cpin1[22], username[] = "max", tusername[22];
-int p, u, i = 0, j, J, in, pin, I[22] = {0}, X, L = 0, cibil_score[10] = {700}; // i is for new acc counter and I[] is for transection counter p is independent
+char a, ch, cpin[22], cpin1[22], username[] = "team5", tusername[22];
+int p, u, i = 0, j, J, in, I[22] = {0}, X, L = 0; // i is for new acc counter and I[] is for transection counter p is independent
 int temp_acc_number;
+long int pin;
 
 struct tran
 {
@@ -25,13 +24,13 @@ struct tran h[11][22];
 struct cust
 {
   int acc_date[5], dob[5], acc_type;
-  char name[55], pan[22], pin1, address[111];
-  long long int aadhar, phone_number, acc_balance;
-  int b, acc_number,score;
+  char name[55], pan[22], pin1, address[111],aadhar[12], phone_number[10];
+  long long int  acc_balance;
+  int b, acc_number;
+  long int score;
 };
 
 struct cust m[10];
-
 
 struct loan
 {
@@ -50,20 +49,22 @@ void create_account();
 void acc_details();
 void withdraw();
 void history();
-int DOB();
-int blank(int);
-int acc_update();
-int phone_number();
-int aadhar_number();
-int pan_number();
-int transection();
-int send1();
+void DOB();
+void blank(int);
+void acc_update();
+void phone_number();
+void aadhar_number();
+void pan_number();
+void transection();
+void send1();
 void loan();
 void loanc();
 void acc();
+void get(int);
 
 int main()
 {
+
 system("cls");
   loanc();
   login();
@@ -74,17 +75,17 @@ system("cls");
 
 void home()
 {
-  system("cls");
+system("cls");
 
   printf("\n\nSTUDENT BANK OF MIT\n\n\n");
 
   printf("1] create new account\n\n");
-  printf("2] cheack account details\n\n");
-  printf("3] transection\n\n");
+  printf("2] check account details\n\n");
+  printf("3] transaction\n\n");
   printf("4] view transection history\n\n");
   printf("5] loan\n\n");
   a = getch();
-  system("cls");
+system("cls");
 
   switch (a)
   {
@@ -96,66 +97,66 @@ void home()
     break;
 
   case '2':
-  get(1);
+    get(1);
   acc_num:
-  set(1);
+    set(1);
     printf("account number:- ");
     get(0);
     blank(20);
     set(0);
-    j=0;
-    while(1)
+    j = 0;
+    while (1)
     {
-      ch=getch();
+      ch = getch();
       if (ch == 13 || ch == 27)
       {
-        break;
+	break;
       }
-      if (ch==8 && j > 0) 
+      if (ch == 8 && j > 0)
       {
-        printf("\b \b");
-        j--;
-        continue;
+	printf("\b \b");
+	j--;
+	continue;
       }
-      if (ch > 47  && ch <  58 )
+      if (ch > 47 && ch < 58)
       {
-        cpin[j]=ch;
-        printf("%c",ch);
-        j++;
+	cpin[j] = ch;
+	printf("%c", ch);
+	j++;
       }
     }
-    if (ch==27)
+    if (ch == 27)
     {
       home();
     }
-    cpin[j]='\0';
+    cpin[j] = '\0';
     temp_acc_number = atoi(cpin);
 
-    for(j=0;j<i;j++)
+    for (j = 0; j < i; j++)
     {
-      if (temp_acc_number==m[j].acc_number)
+      if (temp_acc_number == m[j].acc_number)
       {
-        in=1;
-        break;
+	in = 1;
+	break;
       }
       else
       {
-         in=0;
+	in = 0;
       }
     }
-  if (in == 0 )
-  {
-    goto acc_num;
-  }
-    
+    if (in == 0)
+    {
+      goto acc_num;
+    }
+
     in = temp_acc_number % 10;
-    
+
     if (temp_acc_number == 1)
-   {
+    {
       home();
-   }
- 
-    system("cls");
+    }
+
+  system("cls");
     acc_details();
     break;
 
@@ -170,16 +171,20 @@ void home()
   case '5':
     loan();
     break;
+  case 65:
+  {
+    exit(0);
+  }
 
   default:
-    system("cls");
+  system("cls");
     home();
   }
 }
 
 void create_account()
 {
-  printf("1] Name: ");
+  printf("\n\n1] Name: ");
   scanf(" %[^\n]", m[i].name);
   printf("\n");
   get(1);
@@ -202,6 +207,10 @@ void create_account()
   while (1)
   {
     a = getch();
+    if (a == 27)
+    {
+      break;
+    }
     if (a < 52 && a != 48)
     {
       m[i].b = a - 48;
@@ -209,26 +218,37 @@ void create_account()
       break;
     }
   }
-
+  if (a == 27)
+  {
+    home();
+  }
   if (m[i].b == 3)
   {
 
     printf("\n\n1] for 1 year\n2] for 2 year\n3] for 3 year\n\n");
-  
-  m[i].b=4;
-     
+
+    m[i].b = 4;
+
     while (m[i].b > 3)
     {
-    ch=getch();
-      m[i].b=ch-48;
+      ch = getch();
+      if (ch == 27)
+      {
+	break;
+      }
+      m[i].b = ch - 48;
+    }
+    if (ch == 27)
+    {
+      home();
     }
     m[i].acc_type = 30 + m[i].b; // ex(33 for fixed account for 3 year)
   }
 
-  system("cls");
+system("cls");
   srand(time(NULL));
   m[i].acc_number = ((rand() % 100) + 99) * 10 + i;
-  m[i].score=700;
+  m[i].score = 700;
   get(0);
   x[0] /= 4;
   y[0] /= 4;
@@ -236,6 +256,7 @@ void create_account()
 
   printf("\nyour account created succesesfully\n\n\n");
   printf("your account number is  \n\n%d", m[i].acc_number);
+
   i++;
   while (1)
   {
@@ -244,33 +265,61 @@ void create_account()
     if (a == 27)
       break;
   }
-  system("cls");
+system("cls");
   home();
 }
 
 void deposite() //  deposite function
 {
 
-  system("cls");
+system("cls");
 
-  printf("\naccount balance:- %d", m[in].acc_balance);
+  printf("\n\naccount balance:- %ld", m[in].acc_balance);
 
-  printf("\nenter amount:-");
-  scanf("%d", &h[in][I[in]].transfer);
+  printf("\n\n\nenter amount:-");
+
+  j=0;
+  while (1)
+  {
+    ch = getch();
+    if (ch == 13 || ch == 27)
+    {
+      break;
+    }
+    if (ch == 8)
+    {
+      printf("\b \b");
+      j--;
+      continue;
+    }
+    if (ch > 47 && ch < 58)
+    {
+      cpin1[j] = ch;
+      printf("%c", ch);
+      j++;
+    }
+  }
+  if (ch == 27)
+  {
+    home();
+  }
+  cpin1[j] = '\0';
+  h[in][I[in]].transfer = atol(cpin1);
+
   m[in].acc_balance += h[in][I[in]].transfer;
   h[in][I[in]].balance = m[in].acc_balance;
   printf("\ntransection successfull");
   Time();
-m[in].score=m[in].score+(h[in][I[in]].transfer/100);
+  m[in].score = m[in].score + (h[in][I[in]].transfer / 100);
   I[in]++;
-  
+
   while (1)
   {
     a = getch();
     if (a == 27)
       break;
   }
-  system("cls");
+system("cls");
   home();
 }
 
@@ -284,6 +333,7 @@ void login() // login function
   while (1)
   {
     ch = getch();
+
 
     if (ch == 13)
       break;
@@ -305,7 +355,7 @@ void login() // login function
 
   if (u != 0)
   {
-    system("cls");
+  system("cls");
     login();
   }
   printf("\n\n\nEnter your PIN: "); // pin start
@@ -338,17 +388,17 @@ pin:
   set(1);
 
   cpin[j] = '\0';
-  pin = atoi(cpin);
+  pin = atol(cpin);
 
   if (pin != 261224)
   {
     set(0);
-    blank(j+1);
+    blank(j + 1);
     set(0);
     goto pin;
   }
 
-  system("cls");
+system("cls");
 }
 
 void acc_details() // acc detail function
@@ -363,15 +413,15 @@ udone:
   get(1);
   printf("2] date of birth:- %d/%d/%d\n\n\n", m[in].dob[0], m[in].dob[1], m[in].dob[2]);
   get(2);
-  printf("3] aadhar no.:- %lld\n\n\n", m[in].aadhar);
+  printf("3] aadhar no.:- %s\n\n\n", m[in].aadhar);
   get(3);
-  printf("4] phone number:- %lld\n\n\n", m[in].phone_number);
+  printf("4] phone number:- %s\n\n\n", m[in].phone_number);
   get(4);
   printf("5] pan number:- %s\n\n\n", m[in].pan);
   get(5);
   printf("6] address:- %s\n\n\n", m[in].address);
-  printf("balance:- %lld\n\n", m[in].acc_balance);
-  printf("cibil score:- %d\n\n",m[in].score);
+  printf("balance:- %ld\n\n", m[in].acc_balance);
+  printf("cibil score:- %ld\n\n", m[in].score);
   printf("type of account:- ");
   switch (m[in].acc_type)
   {
@@ -400,49 +450,50 @@ udone:
   }
 }
 
-void withdraw() // withdraw funcyion
+void withdraw()
 {
-  system("cls");
+system("cls");
 
-  printf("WITHDRAW\n\n");
+  printf("\n\nWITHDRAW\n\n");
   printf("\n\n\namount:- ");
-  
-  while(1)
+j=0;
+  while (1)
   {
-    ch=getch();
-    if (ch == 13)
+    ch = getch();
+    if (ch == 13 || ch == 27)
     {
       break;
     }
-    if (ch == 8 )
+    if (ch == 8)
     {
       printf("\b \b");
       j--;
-    continue;
-      
+      continue;
     }
     if (ch > 47 && ch < 58)
     {
-      cpin1[j]=ch;
-      printf("%c",ch);
+      cpin1[j] = ch;
+      printf("%c", ch);
       j++;
-
     }
   }
-    cpin1[j]='\0';
-     h[in][I[in]].transfer=atoll(cpin1);
-     if (m[in].acc_balance < h[in][I[in]].transfer)
-     {
-      printf("\n\ninsufficient balance");
-     ch=0;
-      while(ch != 27)
-      {
-        ch=getch();
-        
-      }
-      home();
-     }
-  
+  if (ch == 27)
+  {
+    home();
+  }
+  cpin1[j] = '\0';
+  h[in][I[in]].transfer = atol(cpin1);
+  if (m[in].acc_balance < h[in][I[in]].transfer)
+  {
+    printf("\n\ninsufficient balance");
+    ch = 0;
+    while (ch != 27)
+    {
+      ch = getch();
+    }
+    home();
+  }
+
   m[in].acc_balance -= h[in][I[in]].transfer;
   h[in][I[in]].balance = m[in].acc_balance;
   printf("\n\ndone\n");
@@ -454,21 +505,70 @@ void withdraw() // withdraw funcyion
     if (a == 27)
       break;
   }
-  system("cls");
+system("cls");
   home();
 }
 
 void history()
 {
-  printf("enter account nummber:- ");
-  scanf("%lld", &temp_acc_number);
+  printf("\n\nenter account nummber:- ");
+  j = 0;
+  while (1)
+  {
+
+    if (j == 4)
+      break;
+
+    ch = getch();
+    if (ch == 27 || ch == 32)
+    {
+      break;
+    }
+    if (ch == 8 && j > 0)
+    {
+      printf("\b \b");
+      j--;
+      continue;
+    }
+
+    if (ch >= '0' && ch <= '9')
+    {
+      cpin1[j] = ch;
+      printf("%c", ch);
+      j++;
+    }
+  }
+  if (ch == 27)
+  {
+    home();
+  }
+  cpin1[j] = '\0';
+
+  temp_acc_number = atoi(cpin1);
+
   u = temp_acc_number % 10;
+system("cls");
+  printf("\n\n%s",m[u].name);
   for (in = 0; in < I[u]; in++)
-    printf("date:- %d/%d/%d     ammount:-%lld", h[u][in].tdate[0], h[u][in].tdate[1], h[u][in].tdate[2], h[u][in].transfer);
-    sprintf(cpin,"%lld",h[u][in].balance);
-   j=strlen(cpin);
-blank(j+9);
- printf("balance:- %lld",h[u][in].balance);
+  {
+
+    printf("\n\n");
+
+
+    printf("date:- %d/%d/%d     ", h[u][in].tdate[0], h[u][in].tdate[1], h[u][in].tdate[2]);
+  if (in==0 || h[u][in-1].balance<h[u][in].balance)
+  {
+    printf("deposit:- %ld",h[u][in].transfer);
+  }
+  else 
+  {
+    printf("withdraw:- %ld",h[u][in].transfer);
+  }
+  sprintf(cpin, "%ld", h[u][in].transfer);
+  j = strlen(cpin);
+  blank(15-j);
+  printf("balance:- %ld", h[u][in].balance);
+  }
   while (1)
   {
     a = getch();
@@ -476,14 +576,14 @@ blank(j+9);
       break;
   }
 
-  system("cls");
+system("cls");
   home();
 }
 
 void Time()
 {
-  time(&t);
   struct tm *current_time = localtime(&t);
+  time(&t);
 
   h[in][I[in]].tdate[0] = current_time->tm_year + 1900;
   h[in][I[in]].tdate[1] = current_time->tm_mon + 1;
@@ -492,7 +592,7 @@ void Time()
 
 void set(X)
 {
-  COORD coord;
+ COORD coord;
   coord.X = x[X];
   coord.Y = y[X];
   SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
@@ -500,13 +600,14 @@ void set(X)
 
 void get(X)
 {
-  CONSOLE_SCREEN_BUFFER_INFO csbi;
+
+   CONSOLE_SCREEN_BUFFER_INFO csbi;
   GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
   x[X] = csbi.dwCursorPosition.X;
   y[X] = csbi.dwCursorPosition.Y;
 }
 
-int DOB()
+void DOB()
 {
   set(1);
 
@@ -520,7 +621,7 @@ int DOB()
     {
       if ((cpin[0] - 48) * 10 + cpin[1] - 48 < 32 && (cpin[0] - 48) * 10 + cpin[1] - 48 != 0 && (cpin[3] - 48) * 10 + cpin[4] - 48 < 13 && (cpin[3] - 48) * 10 + cpin[4] - 48 != 0 && (cpin[6] - 48) * 1000 + (cpin[7] - 48) * 100 + (cpin[8] - 48) * 10 + cpin[9] - 48 > 1910 && (cpin[6] - 48) * 1000 + (cpin[7] - 48) * 100 + (cpin[8] - 48) * 10 + cpin[9] - 48 < 2024)
 
-        break;
+	break;
     }
     if (j == 6 || j == 7 || j == 8 || j == 9)
     {
@@ -542,19 +643,22 @@ int DOB()
       j++;
     }
     cpin[j] = getch();
-
+if (cpin[j] ==27)
+{
+  break;
+}
     if (cpin[j] == 8 && j > 0)
     {
       if (j == 3 || j == 6)
       {
-        printf("\b\b \b");
-        j--;
-        j--;
+	printf("\b\b \b");
+	j--;
+	j--;
       }
       else
       {
-        printf("\b \b");
-        j--;
+	printf("\b \b");
+	j--;
       }
       continue;
     }
@@ -564,19 +668,22 @@ int DOB()
       j++;
     }
   }
-
+if (cpin[j] == 27)
+{
+  home();
+}
   m[i].dob[0] = (cpin[0] - 48) * 10 + cpin[1] - 48;                                                // day
   m[i].dob[1] = (cpin[3] - 48) * 10 + cpin[4] - 48;                                                // month
   m[i].dob[2] = (cpin[6] - 48) * 1000 + (cpin[7] - 48) * 100 + (cpin[8] - 48) * 10 + cpin[9] - 48; // year
 }
-int blank(u)
+void blank(u)
 {
 
   for (J = 0; J < u; J++)
     printf(" ");
 }
 
-int acc_update()
+void acc_update()
 {
   j = i;
   i = in;
@@ -627,10 +734,10 @@ int acc_update()
     break;
   }
   i = j;
-  system("cls");
+system("cls");
 }
 
-int aadhar_number()
+void aadhar_number()
 {
   set(2);
   printf("3] aadhar no.:- ");
@@ -642,9 +749,10 @@ int aadhar_number()
   {
     ch = getch();
 
-    if (j == 12)
+    if (j == 12 || ch == 27)
+    {
       break;
-
+    }
     if (ch == 8 && j > 0)
     {
       printf("\b \b");
@@ -659,11 +767,18 @@ int aadhar_number()
       j++;
     }
   }
-
-  cpin[j] = '\0';
-  m[i].aadhar = atoll(cpin);
+  cpin[j]='\0';
+  for(j=0;j<11;j++)
+ {
+  m[i].aadhar[j]=cpin1[j];
+ }
+if (ch == 27)
+{
+  home();
 }
-int phone_number()
+}
+  
+void phone_number()
 {
   set(3);
   printf("4] phone number:- "); // phone number start
@@ -673,12 +788,13 @@ int phone_number()
   while (1)
   {
 
-    if (j == 10)
+    if (j == 10 || ch == 27 )
     {
-      j++;
+
       break;
     }
     ch = getch();
+
     if (j == 0 && ch < 54 || ch > 57)
       continue;
 
@@ -696,13 +812,20 @@ int phone_number()
       j++;
     }
   }
+  cpin1[j]='\0';
+ for(j=0;j<11;j++)
+ {
+  m[i].phone_number[j]=cpin1[j];
+ }
+ if (ch == 27 )
+ {
+  home();
+ }
+ 
 
-  cpin1[j] = '\0';
-
-  m[i].phone_number = atoll(cpin1);
 }
 
-int pan_number()
+void pan_number()
 {
   set(4);
   printf("5] pan number:- "); // pan  number
@@ -710,8 +833,10 @@ int pan_number()
   j = 0;
   while (1)
   {
-    if (j == 10)
+    if (j == 10 || ch == 27 )
+    {
       break;
+    }
     ch = getch();
 
     if ((j < 5 || j == 9) && ch >= 'a' && ch <= 'z')
@@ -732,12 +857,16 @@ int pan_number()
       j--;
     }
   }
+  if (ch ==27)
+  {
+    home();
+  }
 }
 
-int transection()
+void transection()
 {
 
-  printf("account number:- ");
+  printf("\n\naccount number:- ");
   j = 0;
   while (1)
   {
@@ -796,9 +925,10 @@ int transection()
     while (1)
     {
       a = getch();
-      if (a > 48 && a < 52)
-        break;
+      if (a > 48 && a < 52 || a == 27)
+	break;
     }
+
     switch (a)
     {
     case '1':
@@ -810,27 +940,29 @@ int transection()
     case '3':
       send1();
       break;
+    case 27 :
+    home();
     }
   }
   else
   {
-    system("cls");
+  system("cls");
     transection();
   }
 }
 
-int send1()
+void send1()
 {
   u = in;
-  system("cls");
-  printf("SEND\n\n");
+system("cls");
+  printf("\n\nSEND\n\n");
 
   printf("account number:- ");
   j = 0;
   while (1)
   {
 
-    if (j == 4)
+    if (j == 4 || ch == 27)
     {
       break;
     }
@@ -856,67 +988,70 @@ int send1()
   cpin1[j] = '\0';
   temp_acc_number = atoi(cpin1);
 
-
   for (j = 0; j < i; j++)
   {
     if (temp_acc_number == m[j].acc_number)
-      in = 0;
+    {
+      u = 0;
+      break;
+    }
   }
-  if (in == 0)
+  if (u == 0)
   {
-    
-    in = j - 1;
 
-    printf("\nname:- %s\n", m[in].name);
-    printf("amount:- ");
+   u = j;
+
+    printf("\nname:- %s\n", m[u].name);
+
+    printf("\namount:- ");
     j = 0;
     while (1)
     {
       ch = getch();
       if (ch == 13 || ch == 27)
       {
-        break;
+	break;
       }
       if (ch == 8 && j > 0)
       {
-        printf("\b \b");
-        j--;
-        continue;
+	printf("\b \b");
+	j--;
+	continue;
       }
 
       if (ch >= '0' && ch <= '9')
       {
-        cpin1[j] = ch;
-        printf("%c", ch);
-        j++;
+	cpin1[j] = ch;
+	printf("%c", ch);
+	j++;
       }
     }
     if (ch == 27)
       home();
 
     cpin1[j] = '\0';
-    h[in][I[in]].transfer = atoll(cpin1);
+    h[in][I[in]].transfer = atol(cpin1);
     if (m[in].acc_balance < h[in][I[in]].transfer)
-     {
+    {
       printf("\n\ninsufficient balance");
-     ch=0;
-      while(ch != 27)
+      ch = 0;
+      while (ch != 27)
       {
-        ch=getch();
-        
+	ch = getch();
       }
       home();
-     }
+    }
 
     m[in].acc_balance += h[in][I[in]].transfer;
     m[u].acc_balance -= h[in][I[in]].transfer;
     h[u][I[u]].transfer = h[in][I[in]].transfer;
     h[in][I[in]].balance = m[in].acc_balance;
     h[u][I[u]].balance = m[u].acc_balance;
+
     Time();
+     I[in]++;
     in = u;
     Time();
-    I[in]++;
     I[u]++;
 
     printf("\ndone");
@@ -935,14 +1070,16 @@ int send1()
 
 void loan()
 {
-  printf("LOAN\n\n");
+  struct tm *current_time = localtime(&t);
+
+  printf("\n\nLOAN\n\n");
   printf("account number:- ");
   j = 0;
   while (1)
   {
 
     ch = getch();
-    if (ch == 13)
+    if (ch == 13 ||ch == 27)
     {
       break;
     }
@@ -968,21 +1105,23 @@ void loan()
 
   for (j = 0; j < i; j++)
   {
-    if (temp_acc_number == m[j].acc_number)
-      in = 0;
+    if (temp_acc_number == m[j].acc_number){
+     in = 0;
+  break;
+  }
   }
   if (in == 0)
   {
-    in = j - 1;
-   if (m[in].score<1500)
-   {
-   printf("\n\nnot eligible");
-   while(ch!=27)
-   {
-     ch=getch();
-   }
-   home();
-   }
+    in = j;
+    if (m[in].score < 1500)
+    {
+      printf("\n\nnot eligible");
+      while (ch != 27)
+      {
+	ch = getch();
+      }
+      home();
+    }
     l[L].acc_number = m[in].acc_number;
     printf("\nname:- %s\n\n", m[in].name);
     printf("employment status:-\n\n");
@@ -990,21 +1129,29 @@ void loan()
     while (1)
     {
       a = getch();
+      if (ch == 27)
+      {
+	break;
+      }
       if (a == 49)
       {
-        strcpy(l[L].employment_status, "employed");
-        break;
+	strcpy(l[L].employment_status, "employed");
+	break;
       }
       else if (a == 50)
       {
-        strcpy(l[L].employment_status, "self-employed");
-        break;
+	strcpy(l[L].employment_status, "self-employed");
+	break;
       }
       else if (a == 51)
       {
-        strcpy(l[L].employment_status, "unemployed");
-        break;
+	strcpy(l[L].employment_status, "unemployed");
+	break;
       }
+    }
+    if (ch == 27)
+    {
+      home();
     }
     if (a != 51)
     {
@@ -1012,26 +1159,30 @@ void loan()
       j = 0;
       while (1)
       {
-        a = getch();
-        if (a == 8)
-        {
-          printf("\b \b");
-          j--;
-          continue;
-        }
-        if (a < 58 && a > 47)
-        {
-          cpin1[j] = a - 48;
-          printf("%C", a);
-          j++;
-        }
-        if (a == 13)
-        {
-          break;
-        }
+	a = getch();
+	if (a == 8)
+	{
+	  printf("\b \b");
+	  j--;
+	  continue;
+	}
+	if (a < 58 && a > 47)
+	{
+	  cpin1[j] = a - 48;
+	  printf("%c",a);
+	  j++;
+	}
+	if (a == 13 || a == 27)
+	{
+	  break;
+	}
+      }
+      if ( a == 27 )
+      {
+	home();
       }
       cpin1[j] = '\0';
-      l[L].m_income = atoll(cpin1);
+      l[L].m_income = atol(cpin1);
     }
     printf("\n\nloan amount repuest:-");
     j = 0;
@@ -1040,28 +1191,31 @@ void loan()
       ch = getch();
       if (ch == 8)
       {
-        printf("\b \b");
-        j--;
-        continue;
+	printf("\b \b");
+	j--;
+	continue;
       }
       if (ch < 58 && ch > 47)
       {
-        cpin1[j] = ch;
-        printf("%c",ch);
-        j++;
+	cpin1[j] = ch;
+	printf("%c", ch);
+	j++;
       }
-      if (ch == 13)
+      if (ch == 13 || ch == 27)
       {
-        break;
+	break;
       }
     }
+    if (ch == 27)
+    {
+      home();
+    }
     cpin1[j] = '\0';
-    l[L].l_amount = atoll(cpin1);
+    l[L].l_amount = atol(cpin1);
     printf("\n\npurpose of the loan:- ");
     scanf(" [^\n]", l[L].l_purpose[55]);
 
     time(&t);
-    struct tm *current_time = localtime(&t);
 
     l[L].ldate[0] = current_time->tm_year + 1900;
     l[L].ldate[1] = current_time->tm_mon + 1;
@@ -1069,12 +1223,12 @@ void loan()
     loanc();
     L++;
   }
-else 
-{
+  else
+  {
   system("cls");
-  loan();
-}
-  
+    loan();
+  }
+
   get(0);
   printf("repay date :- DD/MM/YYYY\b\b\b\b\b\b\b\b\b\b");
 
@@ -1084,7 +1238,7 @@ else
     if (j == 10)
     {
       if ((cpin[0] - 48) * 10 + cpin[1] - 48 < 32 && (cpin[0] - 48) * 10 + cpin[1] - 48 != 0 && (cpin[3] - 48) * 10 + cpin[4] - 48 < 13 && (cpin[3] - 48) * 10 + cpin[4] - 48 != 0 && (cpin[6] - 48) * 1000 + (cpin[7] - 48) * 100 + (cpin[8] - 48) * 10 + cpin[9] - 48 > 1910 && (cpin[6] - 48) * 1000 + (cpin[7] - 48) * 100 + (cpin[8] - 48) * 10 + cpin[9] - 48 < 2024)
-      break;
+	break;
     }
     if (j == 6 || j == 7 || j == 8 || j == 9)
     {
@@ -1107,18 +1261,22 @@ else
     }
     cpin[j] = getch();
 
+    if (cpin[j] == 27)
+    {
+      break;
+    }
     if (cpin[j] == 8 && j > 0)
     {
       if (j == 3 || j == 6)
       {
-        printf("\b\b \b");
-        j--;
-        j--;
+	printf("\b\b \b");
+	j--;
+	j--;
       }
       else
       {
-        printf("\b \b");
-        j--;
+	printf("\b \b");
+	j--;
       }
       continue;
     }
@@ -1128,12 +1286,15 @@ else
       j++;
     }
   }
-
+if(cpin[j]== 27)
+{
+  home();
+}
   l[L].rdate[0] = (cpin[0] - 48) * 10 + cpin[1] - 48; // completed
   l[L].rdate[1] = (cpin[3] - 48) * 10 + cpin[4] - 48;
   l[L].rdate[2] = (cpin[6] - 48) * 1000 + (cpin[7] - 48) * 100 + (cpin[8] - 48) * 10 + cpin[9] - 48;
 
-printf("\n\nloan requested sucssesfuly  ");
+  printf("\n\nloan requested sucssesfuly  ");
 
   while (1)
   {
@@ -1145,16 +1306,18 @@ printf("\n\nloan requested sucssesfuly  ");
 }
 void loanc()
 {
+  int A;
+      float p, r = 0.01;
+      p=l[L].l_amount;
   in = 10;
   Time();
   for (j = 0; j < L; j++)
   {
     if (h[in][I[in]].tdate[0] == l[L].rdate[0] && h[in][I[in]].tdate[1] == l[L].rdate[1] && h[in][I[in]].tdate[2] == l[L].rdate[2])
     {
-      int A;
-      float p, r = 0.01;
 
-      l[L].l_amount = pow(p * (1 + r), 1 / 30);
+
+      l[L].l_amount = p*pow((1 + r), 1 / 30);
     }
   }
 }
@@ -1175,5 +1338,5 @@ void acc()
     if (ch == 32)
       break;
   }
-  system("cls");
+system("cls");
 }
